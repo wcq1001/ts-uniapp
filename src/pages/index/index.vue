@@ -2,14 +2,15 @@
   <view class="content">
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
-      <text class="title">{{ title }}</text>
+      <text class="title">{{ memberStore.title }}</text>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const title = ref('Hello')
+import { ref } from "vue";
+import { useMemberStore } from "@/stores/modules/member";
+const memberStore = useMemberStore();
 </script>
 
 <style>
