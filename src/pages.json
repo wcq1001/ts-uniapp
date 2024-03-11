@@ -31,5 +31,33 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  // 分包加载规则，通过插件生成，一般在src下新创建某个功能的分包文件夹，在该分包文件夹中创建uniapp文件
+  // 分包相当于将小程序分解成多个小程序，在真正进入到这个分包时才加载这一部分，因此进入分包会有一定的延迟
+  "subPackages": [
+    {
+      // 子包的根目录
+      "root": "pagesSubPackage1",
+      // 页面路径和窗口表现
+      "pages": [
+        {
+          "path": "setting/setting",
+          "style": {
+            "navigationBarTitleText": "设置"
+          }
+        }
+      ]
+    }
+  ],
+  // 分包预下载规则
+  // 分包预下载表示进入某个界面时，就提前加载这个分包
+  "preloadRule": {
+    // 进入这个页面路由时，开始下载packages中的分包（写root根）
+    "pages/index/index": {
+      // 什么网络下下载分包
+      "network": "all",
+      // 下载那哪些分包
+      "packages": ["pagesSubPackage1"]
+    }
   }
 }
