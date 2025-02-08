@@ -18,7 +18,10 @@
   // 校验 uni-app 组件类型
   "vueCompilerOptions": {
     // experimentalRuntimeMode 已废弃，现调整为 nativeTags，请升级 Volar 插件至最新版本
-    "nativeTags": ["block", "component", "template", "slot"]
+    // vue-official版本为2.0.12可用 同时vue-tsc < 2.0.14
+    "nativeTags": ["block", "component", "template", "slot"],
+    // vue-official版本>=2.0.14可用 同时vue-tsc <= 2.0.21
+    // "plugins": ["@uni-helper/uni-app-types/volar-plugin"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
