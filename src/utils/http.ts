@@ -60,47 +60,9 @@ type Data<T> = {
   result: T;
 };
 // 2.2 添加类型，支持泛型
-// export const http = <T>(options: UniApp.RequestOptions) => {
-//   // 1. 返回 Promise 对象
-//   return new Promise<Data<T>>((resolve, reject) => {
-//     uni.request({
-//       ...options,
-//       // 响应成功
-//       success(res) {
-//         // 状态码 2xx， axios 就是这样设计的
-//         if (res.statusCode >= 200 && res.statusCode < 300) {
-//           // 2.1 提取核心数据 res.data
-//           resolve(res.data as Data<T>)
-//         } else if (res.statusCode === 401) {
-//           // 401错误  -> 清理用户信息，跳转到登录页
-//           const memberStore = useMemberStore()
-//           memberStore.clearProfile()
-//           uni.navigateTo({ url: '/pages/login/login' })
-//           reject(res)
-//         } else {
-//           // 其他错误 -> 根据后端错误信息轻提示
-//           uni.showToast({
-//             icon: 'none',
-//             title: (res.data as Data<T>).msg || '请求错误',
-//           })
-//           reject(res)
-//         }
-//       },
-//       // 响应失败
-//       fail(err) {
-//         uni.showToast({
-//           icon: 'none',
-//           title: '网络错误，换个网络试试',
-//         })
-//         reject(err)
-//       },
-//     })
-//   })
-// }
-// 2.3 添加类型，支持泛型，返回值数据自己定义
 export const http = <T>(options: UniApp.RequestOptions) => {
   // 1. 返回 Promise 对象
-  return new Promise<T>((resolve, reject) => {
+  return new Promise<Data<T>>((resolve, reject) => {
     uni.request({
       ...options,
       // 响应成功
@@ -108,30 +70,68 @@ export const http = <T>(options: UniApp.RequestOptions) => {
         // 状态码 2xx， axios 就是这样设计的
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
-          resolve(res.data as T);
+          resolve(res.data as Data<T>)
         } else if (res.statusCode === 401) {
           // 401错误  -> 清理用户信息，跳转到登录页
-          const memberStore = useMemberStore();
-          memberStore.clearProfile();
-          uni.navigateTo({ url: "/pages/login/login" });
-          reject(res);
+          const memberStore = useMemberStore()
+          memberStore.clearProfile()
+          uni.navigateTo({ url: '/pages/login/login' })
+          reject(res)
         } else {
           // 其他错误 -> 根据后端错误信息轻提示
           uni.showToast({
-            icon: "none",
-            title: (res.data as Data<T>).msg || "请求错误",
-          });
-          reject(res);
+            icon: 'none',
+            title: (res.data as Data<T>).msg || '请求错误',
+          })
+          reject(res)
         }
       },
       // 响应失败
       fail(err) {
         uni.showToast({
-          icon: "none",
-          title: "网络错误，换个网络试试",
-        });
-        reject(err);
+          icon: 'none',
+          title: '网络错误，换个网络试试',
+        })
+        reject(err)
       },
-    });
-  });
-};
+    })
+  })
+}
+// 2.3 添加类型，支持泛型，返回值数据自己定义
+// export const http = <T>(options: UniApp.RequestOptions) => {
+//   // 1. 返回 Promise 对象
+//   return new Promise<T>((resolve, reject) => {
+//     uni.request({
+//       ...options,
+//       // 响应成功
+//       success(res) {
+//         // 状态码 2xx， axios 就是这样设计的
+//         if (res.statusCode >= 200 && res.statusCode < 300) {
+//           // 2.1 提取核心数据 res.data
+//           resolve(res.data as T);
+//         } else if (res.statusCode === 401) {
+//           // 401错误  -> 清理用户信息，跳转到登录页
+//           const memberStore = useMemberStore();
+//           memberStore.clearProfile();
+//           uni.navigateTo({ url: "/pages/login/login" });
+//           reject(res);
+//         } else {
+//           // 其他错误 -> 根据后端错误信息轻提示
+//           uni.showToast({
+//             icon: "none",
+//             title: (res.data as Data<T>).msg || "请求错误",
+//           });
+//           reject(res);
+//         }
+//       },
+//       // 响应失败
+//       fail(err) {
+//         uni.showToast({
+//           icon: "none",
+//           title: "网络错误，换个网络试试",
+//         });
+//         reject(err);
+//       },
+//     });
+//   });
+// };
